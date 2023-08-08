@@ -1,4 +1,4 @@
-package com.example.plansheets
+package com.example.plansheets.Markers
 
 import android.app.Activity
 import android.content.Context
@@ -8,8 +8,10 @@ import android.graphics.drawable.shapes.RectShape
 import android.util.Size
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.ListPopupWindow
 import com.example.plansheets.Sheet.*
 import java.util.*
 import kotlin.math.roundToInt
@@ -28,6 +30,7 @@ open class ShapeMarkerView(private val sheetBaseViewInterface : SheetBaseViewInt
     val shapeMarkerView = FrameLayout(context)
     val selectionView = FrameLayout(context)
     var canMove = false
+    var  popupMenu : ListPopupWindow = ListPopupWindow(context)
 
     open var markedInfos = MarkedInfoType(
         UUID.randomUUID().toString(), PLMShapeType.unknown,
@@ -357,5 +360,17 @@ open class ShapeMarkerView(private val sheetBaseViewInterface : SheetBaseViewInt
     fun performOrientation(activity : Activity, context: Context) {
 
     }
-
+    fun openMenuOptions(list : ArrayList<MarkerMenuOptionsType>)
+    {
+        var adapter: ShapeMarkerViewMenuOptionsAdapter =  ShapeMarkerViewMenuOptionsAdapter(sheetBaseViewInterface,context,list)
+        popupMenu.anchorView = shapeMarkerView
+        popupMenu.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        popupMenu.width = 100//ViewGroup.LayoutParams.WRAP_CONTENT
+        val popUpMenuDrawable = ShapeDrawable()
+        popUpMenuDrawable.shape = RectShape()
+        popUpMenuDrawable.paint.color = Color.YELLOW
+        popupMenu.setBackgroundDrawable(popUpMenuDrawable)
+        popupMenu.setAdapter(adapter)
+        popupMenu.show()
+    }
 }

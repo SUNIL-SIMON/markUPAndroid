@@ -4,8 +4,8 @@ import android.content.Context
 import android.graphics.Color
 import android.view.View
 import android.widget.*
-import com.example.plansheets.CustomExpandableListAdapter
-import com.example.plansheets.ShapeMarkerView
+import com.example.plansheets.Markers.ShapeMarkerView
+import com.example.plansheets.SideLayerListAdapter
 import java.util.ArrayList
 
 class SideLayerView(private val sheetBaseViewInterface : SheetBaseViewInterface, context : Context) : ShapeMarkerView(sheetBaseViewInterface,context) {
@@ -14,13 +14,13 @@ class SideLayerView(private val sheetBaseViewInterface : SheetBaseViewInterface,
     val contractButton = Button(context)
     var layerListView = ExpandableListView(context)
 
-    private var adapter: ExpandableListAdapter? = null
+    private var adapter: SideLayerListAdapter = SideLayerListAdapter(context)
 
     var markerGroups : MutableList<MarkedGroupCellType> =  ArrayList()
 
     fun getSideLayerView(context: Context): View? {
 
-        sideLayerView.setBackgroundColor(Color.WHITE)
+        sideLayerView.setBackgroundColor(Color.YELLOW)
 
         expandButton.text = "+"
         sideLayerView.addView(expandButton)
@@ -32,7 +32,7 @@ class SideLayerView(private val sheetBaseViewInterface : SheetBaseViewInterface,
             sheetBaseViewInterface.toggleSideLayerExpansion()
         }
         sideLayerView.addView(layerListView)
-        layerListView.setBackgroundColor(Color.WHITE)
+        layerListView.setBackgroundColor(Color.RED)
         layerListView.setLayoutParams(FrameLayout.LayoutParams(0, 0))
         layerListView.x = 0f
         layerListView.y = 60f
@@ -69,7 +69,7 @@ class SideLayerView(private val sheetBaseViewInterface : SheetBaseViewInterface,
     }
     fun reloadTableView()
     {
-            adapter = CustomExpandableListAdapter(context, markerGroups)
+            adapter.reinitialize(markerGroups)
             layerListView.setAdapter(adapter)
             layerListView.setOnGroupExpandListener { groupPosition ->
                 Toast.makeText(
@@ -86,17 +86,6 @@ class SideLayerView(private val sheetBaseViewInterface : SheetBaseViewInterface,
                 ).show()
             }
             layerListView.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
-//                Toast.makeText(
-//                    context,
-//                    "Clicked: " + markerGroups[groupPosition].title + " -> " + listData[(
-//                            titleList as
-//                                    java.util.ArrayList<String>
-//                            )
-//                            [groupPosition]]!!.get(
-//                        childPosition
-//                    ),
-//                    Toast.LENGTH_SHORT
-//                ).show()
                 false
             }
     }

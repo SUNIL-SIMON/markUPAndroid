@@ -1,18 +1,14 @@
-package com.example.plansheets.ShapeMarkers
+package com.example.plansheets.Markers.ShapeMarkers
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.RectShape
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.FrameLayout
-import androidx.appcompat.widget.ListPopupWindow
-import com.example.plansheets.*
+import com.example.plansheets.Markers.ShapeMarkerView
 import com.example.plansheets.Sheet.MarkerMenuOptionsType
 import com.example.plansheets.Sheet.MarkerMenuType
 import com.example.plansheets.Sheet.SheetBaseViewInterface
@@ -20,7 +16,6 @@ import java.util.*
 
 class EllipseMarkerView(private val sheetBaseViewInterface : SheetBaseViewInterface, context : Context) : ShapeMarkerView(sheetBaseViewInterface,context){
     val roundView = ImageView(context)
-    var  popupMenu : ListPopupWindow = ListPopupWindow(context)
     override fun getShapeMarker(context: Context): View?
     {
 
@@ -75,16 +70,6 @@ class EllipseMarkerView(private val sheetBaseViewInterface : SheetBaseViewInterf
         list.add(MarkerMenuOptionsType(MarkerMenuType.PASTE,"Paste"))
         list.add(MarkerMenuOptionsType(MarkerMenuType.INFO,"Info"))
 
-
-        var adapter: CustomPopupMenuAdapter =  CustomPopupMenuAdapter(sheetBaseViewInterface,context, list)
-        popupMenu!!.anchorView = view
-        popupMenu!!.height = ViewGroup.LayoutParams.WRAP_CONTENT
-        popupMenu!!.width = 100//ViewGroup.LayoutParams.WRAP_CONTENT
-        val popUpMenuDrawable = ShapeDrawable()
-        popUpMenuDrawable.shape = RectShape()
-        popUpMenuDrawable.paint.color = Color.GREEN
-        popupMenu!!.setBackgroundDrawable(popUpMenuDrawable)
-        popupMenu!!.setAdapter(adapter)
-        popupMenu.show()
+        openMenuOptions(list)
     }
 }

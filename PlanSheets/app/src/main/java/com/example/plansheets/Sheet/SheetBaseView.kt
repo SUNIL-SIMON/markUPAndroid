@@ -18,13 +18,13 @@ import android.view.ViewManager
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
-import com.example.plansheets.DrawMarkers.PathMarkerView
+import com.example.plansheets.Markers.DrawMarkers.PathMarkerView
 import com.example.plansheets.ImageMasterView
-import com.example.plansheets.LineMarkers.LineMarkerView
+import com.example.plansheets.Markers.LineMarkers.LineMarkerView
 import com.example.plansheets.R
-import com.example.plansheets.ShapeMarkers.EllipseMarkerView
-import com.example.plansheets.ShapeMarkers.RectMarkerView
-import com.example.plansheets.ShapeMarkers.TriangleMarkerView
+import com.example.plansheets.Markers.ShapeMarkers.EllipseMarkerView
+import com.example.plansheets.Markers.ShapeMarkers.RectMarkerView
+import com.example.plansheets.Markers.ShapeMarkers.TriangleMarkerView
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -58,12 +58,14 @@ open class SheetBaseView(private val activity: Activity, context: Context) : App
     var selectedMarkerIndex = -1
     var sideLayerExpanded = true
     var markerToBeDroped = PLMShapeType.unknown
+    var a : IntArray = IntArray(2)
     open fun createSheetBaseView(context: Context):View?
     {
         createImageMasterView(context)
         createMarkerLayer(context)
         createControlBar(context)
         createSideLayerView()
+
         return sheetBaseView
     }
     //CREATE----------------------------------------------
@@ -126,7 +128,7 @@ open class SheetBaseView(private val activity: Activity, context: Context) : App
     {
         val v = sideLayerView.getSideLayerView(context)
         sheetBaseView.addView(v)
-        sideLayerView.sideLayerView.setBackgroundColor(Color.WHITE)
+        sideLayerView.sideLayerView.setBackgroundColor(Color.YELLOW)
         toggleSideLayerExpansion()
     }
     //ADDINGMARKER----------------------------------------------

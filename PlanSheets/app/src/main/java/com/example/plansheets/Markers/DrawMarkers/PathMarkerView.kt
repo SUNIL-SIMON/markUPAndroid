@@ -1,15 +1,11 @@
-package com.example.plansheets.DrawMarkers
+package com.example.plansheets.Markers.DrawMarkers
 
 import android.content.Context
 import android.graphics.*
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.RectShape
 import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.appcompat.widget.ListPopupWindow
-import com.example.plansheets.*
+import com.example.plansheets.Markers.ShapeMarkerView
 import com.example.plansheets.Sheet.MarkerMenuOptionsType
 import com.example.plansheets.Sheet.MarkerMenuType
 import com.example.plansheets.Sheet.SheetBaseViewInterface
@@ -17,7 +13,6 @@ import java.util.ArrayList
 
 class PathMarkerView (private val sheetBaseViewInterface : SheetBaseViewInterface, context : Context) : ShapeMarkerView(sheetBaseViewInterface,context) {
     val roundView = ImageView(context)
-    var  popupMenu : ListPopupWindow = ListPopupWindow(context)
     var prevPoint = PointF(0f,0f)
 
     override fun getShapeMarker(context: Context): View?
@@ -100,16 +95,6 @@ class PathMarkerView (private val sheetBaseViewInterface : SheetBaseViewInterfac
         list.add(MarkerMenuOptionsType(MarkerMenuType.PASTE,"Paste"))
         list.add(MarkerMenuOptionsType(MarkerMenuType.INFO,"Info"))
 
-
-        var adapter: CustomPopupMenuAdapter =  CustomPopupMenuAdapter(sheetBaseViewInterface,context, list)
-        popupMenu!!.anchorView = view
-        popupMenu!!.height = ViewGroup.LayoutParams.WRAP_CONTENT
-        popupMenu!!.width = 100//ViewGroup.LayoutParams.WRAP_CONTENT
-        val popUpMenuDrawable = ShapeDrawable()
-        popUpMenuDrawable.shape = RectShape()
-        popUpMenuDrawable.paint.color = Color.GREEN
-        popupMenu!!.setBackgroundDrawable(popUpMenuDrawable)
-        popupMenu!!.setAdapter(adapter)
-        popupMenu.show()
+        openMenuOptions(list)
     }
 }

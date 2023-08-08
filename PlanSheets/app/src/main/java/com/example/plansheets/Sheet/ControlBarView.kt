@@ -8,12 +8,11 @@ import android.graphics.drawable.shapes.RectShape
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
-import com.example.plansheets.ShapeMarkerView
+import com.example.plansheets.Markers.ShapeMarkerView
 
 class ControlBarView(private val sheetBaseViewInterface : SheetBaseViewInterface, context : Context) : ShapeMarkerView(sheetBaseViewInterface,context) {
     val controlBarView = FrameLayout(context)
     fun getControlBarView(context: Context): View? {
-
 
         val btn = Button(context)
         btn.text = "Rect"

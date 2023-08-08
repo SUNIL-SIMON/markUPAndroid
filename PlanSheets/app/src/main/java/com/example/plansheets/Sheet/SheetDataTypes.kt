@@ -4,7 +4,7 @@ import android.graphics.Point
 import android.graphics.PointF
 import android.graphics.drawable.Drawable
 import android.util.Size
-import com.example.plansheets.ShapeMarkerView
+import com.example.plansheets.Markers.ShapeMarkerView
 
 public enum class MarkerStateType
 {
@@ -26,7 +26,7 @@ public enum class MarkerMenuType
 }
 public data class MarkerMenuOptionsType(
     var option : MarkerMenuType,
-    var string : String
+    var menuTitle : String
 )
 public data class MarkedGroupCellType(
     var expanded : Boolean,
