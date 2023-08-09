@@ -20,7 +20,7 @@ class SideLayerView(private val sheetBaseViewInterface : SheetBaseViewInterface,
 
     fun getSideLayerView(context: Context): View? {
 
-        sideLayerView.setBackgroundColor(Color.YELLOW)
+        sideLayerView.setBackgroundColor(Color.LTGRAY)
 
         expandButton.text = "+"
         sideLayerView.addView(expandButton)
@@ -32,7 +32,7 @@ class SideLayerView(private val sheetBaseViewInterface : SheetBaseViewInterface,
             sheetBaseViewInterface.toggleSideLayerExpansion()
         }
         sideLayerView.addView(layerListView)
-        layerListView.setBackgroundColor(Color.RED)
+        layerListView.setBackgroundColor(Color.LTGRAY)
         layerListView.setLayoutParams(FrameLayout.LayoutParams(0, 0))
         layerListView.x = 0f
         layerListView.y = 60f
@@ -46,6 +46,7 @@ class SideLayerView(private val sheetBaseViewInterface : SheetBaseViewInterface,
         {
             sheetBaseViewInterface.toggleSideLayerExpansion()
         }
+        setUplayerListView()
         reloadTableView()
         return sideLayerView
     }
@@ -67,26 +68,29 @@ class SideLayerView(private val sheetBaseViewInterface : SheetBaseViewInterface,
             layerListView.visibility = View.GONE
         }
     }
-    fun reloadTableView()
+    fun setUplayerListView()
     {
-            adapter.reinitialize(markerGroups)
-            layerListView.setAdapter(adapter)
-            layerListView.setOnGroupExpandListener { groupPosition ->
-                Toast.makeText(
-                    context,
-                    markerGroups[groupPosition].title + " List Expanded.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            layerListView.setOnGroupCollapseListener { groupPosition ->
-                Toast.makeText(
-                    context,
-                    markerGroups[groupPosition].title + " List Collapsed.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            layerListView.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
-                false
-            }
+        layerListView.setAdapter(adapter)
+        layerListView.setOnGroupExpandListener { groupPosition ->
+//            Toast.makeText(
+//                context,
+//                markerGroups[groupPosition].title + " List Expanded.",
+//                Toast.LENGTH_SHORT
+//            ).show()
+        }
+        layerListView.setOnGroupCollapseListener { groupPosition ->
+//            Toast.makeText(
+//                context,
+//                markerGroups[groupPosition].title + " List Collapsed.",
+//                Toast.LENGTH_SHORT
+//            ).show()
+        }
+        layerListView.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
+            false
+        }
     }
+    fun reloadTableView() {
+        adapter.reinitialize(markerGroups)
+    }
+
 }

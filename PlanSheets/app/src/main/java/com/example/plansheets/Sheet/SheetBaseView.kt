@@ -12,10 +12,14 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.util.Size
 import android.util.SizeF
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewManager
+import android.widget.ExpandableListView
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import com.example.plansheets.Markers.DrawMarkers.PathMarkerView
@@ -52,6 +56,7 @@ open class SheetBaseView(private val activity: Activity, context: Context) : App
     lateinit var imageView : ImageMasterView
     val markerLayersView = FrameLayout(context)
     val controlBarView = ControlBarView(this,context)
+    var controlBarView2 : View? = null
     val sideLayerView = SideLayerView(this,context)
     var markerGroups : MutableList<MarkedGroupCellType> =  ArrayList()
     var selectedGroupIndex = 0
@@ -123,12 +128,22 @@ open class SheetBaseView(private val activity: Activity, context: Context) : App
         val v = controlBarView.getControlBarView(context)
         sheetBaseView.addView(v)
         controlBarView.setBackgroundColor(Color.TRANSPARENT)
+
+        val layout = findViewById<FrameLayout>(R.id.layout1)
+        controlBarView2 = LayoutInflater.from(context).inflate(R.layout.controlbaritems, layout, false);
+        sheetBaseView.addView(controlBarView2)
+        val markerLayersViewdrawable = ShapeDrawable()
+        markerLayersViewdrawable.shape = RectShape()
+        markerLayersViewdrawable.paint.color = Color.RED
+        markerLayersViewdrawable.paint.strokeWidth = 10f
+        markerLayersViewdrawable.paint.style = Paint.Style.STROKE
+        controlBarView2?.setBackground(markerLayersViewdrawable)
     }
     fun createSideLayerView()
     {
         val v = sideLayerView.getSideLayerView(context)
         sheetBaseView.addView(v)
-        sideLayerView.sideLayerView.setBackgroundColor(Color.YELLOW)
+        sideLayerView.sideLayerView.setBackgroundColor(Color.LTGRAY)
         toggleSideLayerExpansion()
     }
     //ADDINGMARKER----------------------------------------------
@@ -364,7 +379,8 @@ open class SheetBaseView(private val activity: Activity, context: Context) : App
             sideLayerView.sideLayerView.y = h.toFloat() * 0.2.toFloat()
             controlBarView.performOrientation(s,g)
         }
-
+//        controlBarView2.y = height.toFloat()-200
+        controlBarView2?.setLayoutParams(FrameLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT))
         reConfigureImageView()
         reConfigureMarkerLayer()
 
@@ -581,22 +597,4 @@ open class SheetBaseView(private val activity: Activity, context: Context) : App
         val toast = Toast.makeText(context, "toast", Toast.LENGTH_SHORT)
         toast.show()
     }
-//    fun getSideLayerData():HashMap<String, List<String>>
-//    {
-//        val expandableListDetail = HashMap<String, List<String>>()
-////        val myFavCricketPlayers: MutableList<String> =
-////            ArrayList()
-////        myFavCricketPlayers.add("MS.Dhoni")
-////        myFavCricketPlayers.add("Sehwag")
-////        myFavCricketPlayers.add("Shane Watson")
-////        myFavCricketPlayers.add("Ricky Ponting")
-////        myFavCricketPlayers.add("Shahid Afridi")
-////        val myFavFootballPlayers: MutableList<String> = ArrayList()
-////        myFavFootballPlayers.add("Cristiano Ronaldo")
-////        myFavFootballPlayers.add("Lionel Messi")
-////        myFavFootballPlayers.add("Gareth Bale")
-////        myFavFootballPlayers.add("Neymar JR")
-////        myFavFootballPlayers.add("David de Gea")
-//        return expandableListDetail
-//    }
 }
