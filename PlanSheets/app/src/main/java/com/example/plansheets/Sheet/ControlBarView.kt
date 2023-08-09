@@ -5,79 +5,76 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
 import com.example.plansheets.Markers.ShapeMarkerView
+import com.example.plansheets.R
 
 class ControlBarView(private val sheetBaseViewInterface : SheetBaseViewInterface, context : Context) : ShapeMarkerView(sheetBaseViewInterface,context) {
-    val controlBarView = FrameLayout(context)
+    var controlBarView : View? = null
     fun getControlBarView(context: Context): View? {
+        val convertView = LayoutInflater.from(context).inflate(R.layout.activity_main, null)
+        val layout = convertView?.findViewById<FrameLayout>(R.id.sheetlayout)
+        controlBarView = LayoutInflater.from(context).inflate(R.layout.controlbaritems, layout, false);
+//        val markerLayersViewdrawable = ShapeDrawable()
+//        markerLayersViewdrawable.shape = RectShape()
+//        markerLayersViewdrawable.paint.color = Color.YELLOW
+//        markerLayersViewdrawable.paint.strokeWidth = 10f
+//        markerLayersViewdrawable.paint.style = Paint.Style.STROKE
+//        controlBarView?.setBackground(markerLayersViewdrawable)
 
-        val btn = Button(context)
-        btn.text = "Rect"
-        controlBarView.addView(btn)
-        btn.setLayoutParams(FrameLayout.LayoutParams(100, 60))
-        btn.x = 210f
-        btn.y = 0f
-        btn.setOnClickListener()
+
+        return  controlBarView
+    }
+    fun setControlBarListners()
+    {
+        val btn = controlBarView?.findViewById<Button>(R.id.controlbarRect_button)
+        btn?.setOnClickListener()
         {
             sheetBaseViewInterface.selectedMarkerToBeDroped(PLMShapeType.RECT)
         }
-        val btn2 = Button(context)
-        btn2.text = "Ellipse"
-        controlBarView.addView(btn2)
-        btn2.setLayoutParams(FrameLayout.LayoutParams(100, 60))
-        btn2.x = 320f
-        btn2.y = 0f
-        btn2.setOnClickListener()
+        val btn2 = controlBarView?.findViewById<Button>(R.id.controlbarEllipse_button)
+        btn2?.setOnClickListener()
         {
             sheetBaseViewInterface.selectedMarkerToBeDroped(PLMShapeType.ROUND)
         }
-        val btn3 = Button(context)
-        btn3.text = "Triangle"
-        controlBarView.addView(btn3)
-        btn3.setLayoutParams(FrameLayout.LayoutParams(100, 60))
-        btn3.x = 430f
-        btn3.y = 0f
-        btn3.setOnClickListener()
+        val btn3 = controlBarView?.findViewById<Button>(R.id.controlbarTriangle_button)
+        btn3?.setOnClickListener()
         {
             sheetBaseViewInterface.selectedMarkerToBeDroped(PLMShapeType.TRIANGLE)
         }
-        val btn4 = Button(context)
-        btn4.text = "Line"
-        controlBarView.addView(btn4)
-        btn4.setLayoutParams(FrameLayout.LayoutParams(100, 60))
-        btn4.x = 540f
-        btn4.y = 0f
-        btn4.setOnClickListener()
+        val btn4 = controlBarView?.findViewById<Button>(R.id.controlbarText_button)
+        btn4?.setOnClickListener()
+        {
+            sheetBaseViewInterface.selectedMarkerToBeDroped(PLMShapeType.TEXT)
+        }
+
+        val btn5 = controlBarView?.findViewById<Button>(R.id.controlbarLine_button)
+        btn5?.setOnClickListener()
         {
             sheetBaseViewInterface.selectedMarkerToBeDroped(PLMShapeType.LINE)
         }
-
-        val btn5 = Button(context)
-        btn5.text = "Pen"
-        controlBarView.addView(btn5)
-        btn5.setLayoutParams(FrameLayout.LayoutParams(100, 60))
-        btn5.x = 650f
-        btn5.y = 0f
-        btn5.setOnClickListener()
+        val btn6 = controlBarView?.findViewById<Button>(R.id.controlbarPen_button)
+        btn6?.setOnClickListener()
         {
             sheetBaseViewInterface.selectedMarkerToBeDroped(PLMShapeType.PATH)
         }
-
-        val controlBarViewdrawable = ShapeDrawable()
-        controlBarViewdrawable.shape = RectShape()
-        controlBarViewdrawable.paint.color = Color.BLUE
-        controlBarViewdrawable.paint.strokeWidth = 2f
-        controlBarViewdrawable.paint.style = Paint.Style.STROKE
-        controlBarView.setBackground(controlBarViewdrawable)
-        return controlBarView
+        val btn7 = controlBarView?.findViewById<Button>(R.id.controlbarHighlighter_button)
+        btn7?.setOnClickListener()
+        {
+            sheetBaseViewInterface.selectedMarkerToBeDroped(PLMShapeType.HIGHLIGHTER)
+        }
+        val btn8 = controlBarView?.findViewById<Button>(R.id.controlbarImage_button)
+        btn8?.setOnClickListener()
+        {
+            sheetBaseViewInterface.selectedMarkerToBeDroped(PLMShapeType.IMAGE)
+        }
     }
     open fun performOrientation(screenWidth:Int,screenHeight : Int)
     {
-        controlBarView.x = 0f
-        controlBarView.y = screenHeight.toFloat() - 200
-        controlBarView.setLayoutParams(FrameLayout.LayoutParams(screenWidth, 60))
+        controlBarView?.y = screenHeight.toFloat() - 200
     }
 }

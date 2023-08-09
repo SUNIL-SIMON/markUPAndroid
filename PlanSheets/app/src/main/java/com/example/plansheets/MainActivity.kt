@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     fun addButtons()
     {
         val context = applicationContext
-        val layout = findViewById<FrameLayout>(R.id.layout1)
+        val layout = findViewById<FrameLayout>(R.id.sheetlayout)
         sheetBaseView = SheetBaseView(this,context)
 
         val view = sheetBaseView?.createSheetBaseView(context)

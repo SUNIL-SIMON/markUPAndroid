@@ -46,6 +46,10 @@ class PathMarkerView (private val sheetBaseViewInterface : SheetBaseViewInterfac
     }
     fun setCanvas()
     {
+        if(roundView.layoutParams.width == 0 || roundView.layoutParams.height == 0)
+        {
+            return
+        }
         val points = markedInfos.originalDetails.originalLayerPoints
         val bitmap = Bitmap.createBitmap(roundView.layoutParams.width, roundView.layoutParams.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
